@@ -20,6 +20,8 @@ A tool to generate seed Wikipedia pages in several languages for people to edit 
 
 *language*: choose the output language; currently supported: English (EN) and Irish (GA).
 
+*triple_source*: choose where to get the triples from, either the DBpedia Ontology (Ontology, generally more quality) or the Wikipedia infoboxes ('Infobox', generally more coverage). 
+
 *ignore_properties*: list here the properties (separated by a comma) that you don't want to generate (e.g. "width" often has bad values on DBpedia, so it's recommended to ignore it).
 
 **Advanced parameters**
