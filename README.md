@@ -3,12 +3,13 @@ A tool to generate seed Wikipedia pages in several languages for people to edit 
 
 ## Quick start
 
-1. Run cell of Step 1 to download the resources needed.
-2. Run first cell of Step 2 to set parameters (see below for more about parameters).
-3. Run second cell of Step 2 to fetch DBpedia properties
-4. Optional: select one or more properties in the resulting table using Ctrl+click on each desired property (if none specified, all will be generated).
-6. Run 19 cells of Step 3 to generate a text.
-7. Run the cell of Step 4 to show the text in a mock Wikipedia page.
+1. Click on *Wikipedia_generator.ipynb* above and then click on *Open in Colab* at the top of the next page.
+2. In Colab, run cell of Step 1 to download the resources needed (click the play button just below *Step 1*); it takes a couple of minutes to install.
+3. Run first cell of Step 2 to set parameters (click the play button just below *Set parameters*; see below for more about parameters).
+4. Run second cell of Step 2 to fetch DBpedia properties (click the play button just below *Get DBpedia properties*)
+5. Optional: select one or more properties in the resulting table using Ctrl+click on each desired property (if none specified, all will be generated).
+6. Run 19 cells of Step 3 to generate a text (click the play button just below *Step 3*).
+7. Run the cell of Step 4 to show the text in a mock Wikipedia page (click the play button just below *Step 4*).
 
 ## Parameters
 
