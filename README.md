@@ -23,12 +23,21 @@ The tool is intended to generate seed Wikipedia pages in several languages for p
 
 *language*: choose the output language; currently supported: English (EN) and Irish (GA).
 
+**Advanced parameters**
+
 *triple_source*: choose where to get the triples from, either the DBpedia Ontology (Ontology, generally more quality) or the Wikipedia infoboxes ('Infobox', generally more coverage). 
 
 *ignore_properties*: list here the properties (separated by a comma) that you don't want to generate (e.g. "width" often has bad values on DBpedia, so it's recommended to ignore it).
 
-**Advanced parameters**
-
 *generate_intermediate_representations*: Select 'no' to get all intermediate linguistic representations, 'yes' if you're only interested in the output.
 
 *split*: set to 'test' for Wikipedia page generation.
+
+## How it works
+[Irish Wikipipedia generation poster](documents/2023_START-ER-poster.pdf)
+
+## References
+
+Simon Mille, Elaine Uí Dhonnchadha, Lauren Cassidy, Brian Davis, Stamatia Dasiopoulou, Anya Belz. 2023. Generating Irish Text with a Flexible Plug-and-Play Architecture. In *Proceedings of the Second Workshop on Pattern-based Approaches to NLP in the Age of Deep Learning (Pan-DL'23@EMNLP)*, Singapore. To appear.
+
+Simon Mille, Elaine Uí Dhonnchadha, Stamatia Dasiopoulou, Lauren Cassidy, Brian Davis, Anya Belz. 2023. DCU/TCD-FORGe at WebNLG’23: Irish rules!. In *Proceedings of the Workshop on Multimodal, Multilingual Natural Language Generation and Multilingual WebNLG Challenge (MM-NLG@INLG)*, Prague, Czech Republic. To appear. [Paper PDF](https://aclanthology.org/2023.mmnlg-1.10.pdf)
