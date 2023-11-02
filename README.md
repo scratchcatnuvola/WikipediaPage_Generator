@@ -1,5 +1,5 @@
 # WikipediaPage_Generator
-*Important notice*: this tool is still at an early stage of development; it can generate text that is unnatural, and sometimes ungrammatical. 
+**Important notice**: this tool is still at an early stage of development; it can generate text that is unnatural, and sometimes ungrammatical. 
 
 The tool is intended to generate seed Wikipedia pages in several languages for people to edit and possibly upload on Wikipedia.
 
