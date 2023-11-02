@@ -1,4 +1,5 @@
 # WikipediaPage_Generator
+
 **Important notice**: this tool is still at an early stage of development; it can generate text that is unnatural, and sometimes ungrammatical. 
 
 The tool is intended to generate seed Wikipedia pages in several languages for people to edit and possibly upload on Wikipedia.
@@ -34,10 +35,16 @@ The tool is intended to generate seed Wikipedia pages in several languages for p
 *split*: set to 'test' for Wikipedia page generation.
 
 ## How it works
-[Irish Wikipipedia generation poster](documents/2023_START-ER-poster.pdf)
+
+[Irish Wikipedia generation poster](documents/2023_START-ER-poster.pdf)
 
 ## References
 
 Simon Mille, Elaine Uí Dhonnchadha, Lauren Cassidy, Brian Davis, Stamatia Dasiopoulou, Anya Belz. 2023. Generating Irish Text with a Flexible Plug-and-Play Architecture. In *Proceedings of the Second Workshop on Pattern-based Approaches to NLP in the Age of Deep Learning (Pan-DL'23@EMNLP)*, Singapore. To appear.
 
 Simon Mille, Elaine Uí Dhonnchadha, Stamatia Dasiopoulou, Lauren Cassidy, Brian Davis, Anya Belz. 2023. DCU/TCD-FORGe at WebNLG’23: Irish rules!. In *Proceedings of the Workshop on Multimodal, Multilingual Natural Language Generation and Multilingual WebNLG Challenge (MM-NLG@INLG)*, Prague, Czech Republic. To appear. [Paper PDF](https://aclanthology.org/2023.mmnlg-1.10.pdf)
+
+## Acknowledgements
+The project was funded by the European Union under the Marie Skłodowska-Curie grant agreement No 101062572 (M-FleNS).
+
+[M-FleNS Website](https://sites.google.com/adaptcentre.ie/m-flens/home/resources)
