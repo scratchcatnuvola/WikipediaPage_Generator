@@ -42,9 +42,9 @@ The tool is intended to generate seed Wikipedia pages in several languages for p
 
 ## References
 
-Simon Mille, Elaine Uí Dhonnchadha, Lauren Cassidy, Brian Davis, Stamatia Dasiopoulou, Anya Belz. 2023. Generating Irish Text with a Flexible Plug-and-Play Architecture. In *Proceedings of the Second Workshop on Pattern-based Approaches to NLP in the Age of Deep Learning (Pan-DL'23@EMNLP)*, Singapore. To appear.
+Simon Mille, Elaine Uí Dhonnchadha, Lauren Cassidy, Brian Davis, Stamatia Dasiopoulou, Anya Belz. 2023. Generating Irish Text with a Flexible Plug-and-Play Architecture. In *Proceedings of the Second Workshop on Pattern-based Approaches to NLP in the Age of Deep Learning (Pan-DL'23@EMNLP)*, pages 25--42, Singapore. [Paper PDF](https://aclanthology.org/2023.pandl-1.4)
 
-Simon Mille, Elaine Uí Dhonnchadha, Stamatia Dasiopoulou, Lauren Cassidy, Brian Davis, Anya Belz. 2023. DCU/TCD-FORGe at WebNLG’23: Irish rules!. In *Proceedings of the Workshop on Multimodal, Multilingual Natural Language Generation and Multilingual WebNLG Challenge (MM-NLG@INLG)*, Prague, Czech Republic. To appear. [Paper PDF](https://aclanthology.org/2023.mmnlg-1.10.pdf)
+Simon Mille, Elaine Uí Dhonnchadha, Stamatia Dasiopoulou, Lauren Cassidy, Brian Davis, Anya Belz. 2023. DCU/TCD-FORGe at WebNLG’23: Irish rules!. In *Proceedings of the Workshop on Multimodal, Multilingual Natural Language Generation and Multilingual WebNLG Challenge (MM-NLG@INLG)*, pages 87--92, Prague, Czech Republic. [Paper PDF](https://aclanthology.org/2023.mmnlg-1.10)
 
 ## Acknowledgements
 The project was funded by the European Union under the Marie Skłodowska-Curie grant agreement No 101062572 (M-FleNS).
