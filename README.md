@@ -1,6 +1,8 @@
 # WikipediaPage_Generator
 
-**Important notice**: this tool is still at an early stage of development; it can generate text that is unnatural, and sometimes ungrammatical. 
+**Important notice#1**: this tool is still at an early stage of development; it can generate text that is unnatural, and sometimes ungrammatical. 
+
+**Important notice#2** (13/02/24): problems related to the access to files stored on Google drive may temporarily affect the Notebook.
 
 The tool is intended to generate seed Wikipedia pages in several languages for people to edit and possibly upload on Wikipedia.
 
