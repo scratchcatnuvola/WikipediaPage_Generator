@@ -2,9 +2,7 @@
 
 **Important notice#1**: this tool is still at an early stage of development; it can generate text that is unnatural, and sometimes ungrammatical. 
 
-**Important notice#2** (13/02/24): problems related to the access to files stored on Google drive may temporarily affect the Notebook.
-
-The tool is intended to generate seed Wikipedia pages in several languages for people to edit and possibly upload on Wikipedia.
+The tool is intended to generate seed Wikipedia pages in several languages for people to edit, and possibly upload on Wikipedia. Our generator is fully rule-based and open-source; its general quality is lower than that of the best large language models, but unlike them, it is extremely data and resource efficient. If you like rule-based NLG systems, you may want to check [this one](https://arxiv.org/ftp/arxiv/papers/2311/2311.14808.pdf) too.
 
 ## Quick start
 
@@ -14,7 +12,11 @@ The tool is intended to generate seed Wikipedia pages in several languages for p
 4. Run second cell of Step 2 to fetch DBpedia properties (click the play button just below *Get DBpedia properties*)
 5. Optional: select one or more properties in the resulting table using Ctrl+click on each desired property (if none specified, all will be generated).
 6. Run 20 cells of Step 3 to generate a text (click the play button just below *Step 3*).
-7. Run the cell of Step 4 to show the text in a mock Wikipedia page (click the play button just below *Step 4*).
+7. Run the cell of Step 4 to show the text in a mock Wikipedia page (click the play button just below *Show text*).
+
+The code essentially outputs 2 files, which can be downloaded from the file browser on the left (click the folder icon on the left edge if you don't see the browser):
+- the output file, which contains the generated text (*all_[languageID]_[split]_out.txt*).
+- a file that contains a ready-made prompt designed for ChatGPT, the top line for this task (*GPT_prompt_[entityName].txt*).
 
 ## Parameters
 
@@ -32,7 +34,7 @@ The tool is intended to generate seed Wikipedia pages in several languages for p
 
 *ignore_properties*: list here the properties (separated by a comma) that you don't want to generate (e.g. "width" often has bad values on DBpedia, so it's recommended to ignore it).
 
-*generate_intermediate_representations*: Select 'no' to get all intermediate linguistic representations, 'yes' if you're only interested in the output.
+*generate_intermediate_representations*: Select 'no' if you're only interested in the output, 'yes' to get all intermediate linguistic representations in the native .str format.
 
 *split*: set to 'test' for Wikipedia page generation.
 
