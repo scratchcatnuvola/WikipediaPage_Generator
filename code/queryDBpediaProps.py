@@ -4,7 +4,6 @@
 # Query DBpedia for a given entity
 # From ChatGPT. Prompt: "Thanks! Now please write a sparql query that can be used in Python to get all the properties related to Olga Bondareva on DBpedia. For example, birthDate, birthPlace, etc."
 from SPARQLWrapper import SPARQLWrapper, JSON
-from xml.dom import minidom
 import os
 import re
 import codecs
@@ -122,3 +121,9 @@ if __name__ == "__main__":
 
   with open(os.path.join(out_folder, 'list_PropObj'), 'wb') as fh:
     pickle.dump(list_propObj, fh)
+    
+  with open(os.path.join(out_folder, 'list_triple_objects'), 'wb') as fh:
+    pickle.dump(list_triple_objects, fh)
+    
+  with open(os.path.join(out_folder, 'list_obj'), 'wb') as fh:
+    pickle.dump(list_obj, fh)
