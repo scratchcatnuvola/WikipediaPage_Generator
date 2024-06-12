@@ -12,9 +12,15 @@ import sys
 import pickle
 
 props_list_path = sys.argv[1]
-ignore_properties_list = sys.argv[2]
-entity_name = sys.argv[3]
-out_folder = sys.argv[4]
+entity_name = sys.argv[2]
+triple_source = sys.argv[3]
+ignore_properties_str = sys.argv[4]
+out_folder = sys.argv[5]
+
+ignore_properties_input = ignore_properties_str.replace('_SP_', ' ').split('_COM_')
+ignore_properties_list = []
+for ignored_property in ignore_properties_input:
+  ignore_properties_list.append(ignored_property.strip())
 
 # Read file with all covered properties
 fd = codecs.open(props_list_path, 'r', 'utf-8')
@@ -106,10 +112,13 @@ if __name__ == "__main__":
   list_prop = []
   list_obj = []
   list_propObj =[]
+
   for n, triple_object in enumerate(list_triple_objects):
     list_prop.append(triple_object.DBprop)
     list_obj.append(triple_object.DBobj)
     list_propObj.append(str(n)+' - '+triple_object.DBprop+': '+triple_object.DBobj)
-    
-  with codecs.open(os.path.join(out_folder, 'list_PropObj.txt'), 'w', 'utf-8) as fh:
+
+  # print(list_propObj)
+
+  with open(os.path.join(out_folder, 'list_PropObj'), 'wb') as fh:
     pickle.dump(list_propObj, fh)
