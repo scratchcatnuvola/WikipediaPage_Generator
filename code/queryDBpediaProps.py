@@ -10,26 +10,6 @@ import codecs
 import sys
 import pickle
 
-props_list_path = sys.argv[1]
-entity_name = sys.argv[2]
-triple_source = sys.argv[3]
-ignore_properties_str = sys.argv[4]
-out_folder = sys.argv[5]
-
-ignore_properties_input = ignore_properties_str.replace('_SP_', ' ').split('_COM_')
-ignore_properties_list = []
-for ignored_property in ignore_properties_input:
-  ignore_properties_list.append(ignored_property.strip())
-
-# Read file with all covered properties
-fd = codecs.open(props_list_path, 'r', 'utf-8')
-lines_properties = fd.readlines()
-list_properties = []
-for line_properties in lines_properties:
-  line_prop_list = line_properties.strip().split('-')
-  for prop in line_prop_list:
-    list_properties.append(prop)
-
 # print('There are '+str(len(list_properties))+' different property labels.')
 # print(sorted(list_properties))
 
@@ -39,7 +19,7 @@ class Triple:
     self.DBsubj = subj_value
     self.DBobj = obj_value
 
-def get_triples_seen(results, subj_name):
+def get_triples_seen(results, subj_name, triple_source, list_properties, ignore_properties_list):
   # Process and print the results
   list_triple_objects = []
   for result in results:
@@ -94,14 +74,35 @@ def get_properties_of_entity(uri):
   # Return the list of properties for the entity
   return(results["results"]["bindings"])
 
-if __name__ == "__main__":
+  # if __name__ == "__main__":
+  #   props_list_path = sys.argv[1]
+  #   entity_name = sys.argv[2]
+  #   triple_source = sys.argv[3]
+  #   ignore_properties_str = sys.argv[4]
+  #   out_folder = sys.argv[5]
+
+def get_dbpedia_properties(props_list_path, entity_name, triple_source, ignore_properties_str, out_folder):
+  ignore_properties_input = ignore_properties_str.split(',')
+  ignore_properties_list = []
+  for ignored_property in ignore_properties_input:
+    ignore_properties_list.append(ignored_property.strip())
+
+  # Read file with all covered properties
+  fd = codecs.open(props_list_path, 'r', 'utf-8')
+  lines_properties = fd.readlines()
+  list_properties = []
+  for line_properties in lines_properties:
+    line_prop_list = line_properties.strip().split('-')
+    for prop in line_prop_list:
+      list_properties.append(prop)
+
   selected_uri = "http://dbpedia.org/resource/"+entity_name
   # selected_uri = "http://dbpedia.org/resource/Olga_Bondareva"
   subj_name = selected_uri.rsplit('/', 1)[1]
   # Get all properties for entity
   results = get_properties_of_entity(selected_uri)
   # Get properties covered by the generator and their respective objets
-  list_triple_objects = get_triples_seen(results, subj_name)
+  list_triple_objects = get_triples_seen(results, subj_name, triple_source, list_properties, ignore_properties_list)
 
   # Check
   # print('Subject: '+subj_name)
@@ -118,12 +119,13 @@ if __name__ == "__main__":
     list_propObj.append(str(n)+' - '+triple_object.DBprop+': '+triple_object.DBobj)
 
   # print(list_propObj)
+  return list_triple_objects, list_propObj, list_obj
 
-  with open(os.path.join(out_folder, 'list_PropObj'), 'wb') as fh:
-    pickle.dump(list_propObj, fh)
+  # with open(os.path.join(out_folder, 'list_PropObj'), 'wb') as fh:
+  #   pickle.dump(list_propObj, fh)
     
-  with open(os.path.join(out_folder, 'list_triple_objects'), 'wb') as fh:
-    pickle.dump(list_triple_objects, fh)
+  # with open(os.path.join(out_folder, 'list_triple_objects'), 'wb') as fh:
+  #   pickle.dump(list_triple_objects, fh)
     
-  with open(os.path.join(out_folder, 'list_obj'), 'wb') as fh:
-    pickle.dump(list_obj, fh)
+  # with open(os.path.join(out_folder, 'list_obj'), 'wb') as fh:
+  #   pickle.dump(list_obj, fh)
