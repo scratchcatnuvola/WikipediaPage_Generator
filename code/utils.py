@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import shutil
+import codecs
 from xml.dom import minidom
 import re
 
