@@ -6,6 +6,8 @@ import codecs
 import json
 from xml.dom import minidom
 import re
+import glob
+from google.colab import files
 
 def clear_files(folder):
   """Function to clear files from a folder."""
@@ -160,3 +162,56 @@ def prepare_variables_xml2CoNLL_conversion(str_PredArg_folder, language, entity_
   new_triple2predArg = path_triple2predArg+'/'
   newEntityName = removeReservedCharsFileName(entity_name)
   return new_triple2predArg, name_conll_templates, path_t2p_out, language_t2p, newEntityName
+
+def check_postProcessed_outputs(root_folder, prefinal_output_folder, count_strs_all_FORGe):
+  list_filepaths = glob.glob(os.path.join(prefinal_output_folder, '*_postproc.txt'))
+  count_strs_all_postproc = []
+  for filepath in sorted(list_filepaths):
+    count_strs_all = 0
+    head, tail = os.path.split(filepath)
+    fd = codecs.open(filepath, 'r', 'utf-8')
+    lines = fd.readlines()
+    x = 0
+    for line in lines:
+      if not line == '\n':
+        count_strs_all += 1
+      x += 1
+    count_strs_all_postproc.append(count_strs_all)
+  
+  with codecs.open(os.path.join(root_folder, 'FORGe', 'log', 'summary.txt'), 'a', 'utf-8') as fo:
+    fo.write('\nPost-processing debug\n==================\n\n')
+    if not sum(count_strs_all_postproc) == count_strs_all_FORGe:
+      print('\nERROR! Mismatch with FORGe outputs!')
+      fo.write('ERROR! Mismatch with FORGe outputs!\n')
+    print('\nThere are '+str(sum(count_strs_all_postproc))+' texts.')
+    fo.write('There are '+str(sum(count_strs_all_postproc))+' texts.\n')
+    print('Texts per file: '+str(count_strs_all_postproc))
+    fo.write('Texts per file: '+str(count_strs_all_postproc)+'\n')
+    fo.write('---------------------------------\n')
+
+def concatenate_files(root_folder, morph_output_folder, temp_input_folder_morph, split, language, count_strs_all_FORGe):
+  list_clean_outputs = ''
+  if language == 'GA':
+    list_clean_outputs = glob.glob(os.path.join(morph_output_folder, '*_out_postproc.txt'))
+  else:
+    list_clean_outputs = glob.glob(os.path.join(temp_input_folder_morph, split, '*_postproc.txt'))
+  print(list_clean_outputs)
+  
+  filename = 'all_'+language+'_'+split+'_out.txt'
+  
+  with codecs.open(filename, 'w', 'utf-8') as outfile:
+    # Files need to be sorted to be concatenated in the right order
+    for fname in sorted(list_clean_outputs):
+      print('Processing '+fname)
+      with open(fname) as infile:
+        outfile.write(infile.read())
+  
+  # Check
+  with codecs.open(os.path.join(root_folder, 'FORGe', 'log', 'summary.txt'), 'a', 'utf-8') as fo:
+    fo.write('\nConcatenate debug\n==================\n\n')
+    count_texts_all = len(codecs.open(filename).readlines())
+    if not count_texts_all == count_strs_all_FORGe:
+      print('\nERROR! Mismatch with FORGe outputs!')
+      fo.write(('ERROR! Mismatch with FORGe outputs!\n'))
+    print('\nThere are '+str(count_texts_all)+' texts.')
+    fo.write('There are '+str(count_texts_all)+' texts.\n')
