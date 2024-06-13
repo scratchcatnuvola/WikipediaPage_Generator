@@ -3,6 +3,7 @@
 import os
 import shutil
 import codecs
+import json
 from xml.dom import minidom
 import re
 
@@ -99,13 +100,10 @@ def create_xml(triple_objects, properties_selected_by_user, input_category, trip
       modified_ts.appendChild(mtriple)
       mtriple.appendChild(text2)
     x += 1
-
   xml_str = root.toprettyxml(indent ="  ")
   save_path_file = os.path.join(triple2predArgPath, str(removeReservedCharsFileName(triple_object.DBsubj))+".xml")
-
   with open(save_path_file, "w") as f:
       f.write(xml_str)
-
   return list_triples_text 
 
 def create_GPT_Prompt(entity_name, language, list_triples_text):
@@ -130,3 +128,35 @@ def count_expected_texts(root_folder):
     if line.startswith('Outputs: '):
       count_strs_all_FORGe = int(line.strip().split('Outputs: ')[-1])
   return count_strs_all_FORGe
+
+def create_jsons_SubjAndObj(entity_name, list_obj, path_triple2predArg):
+  """ Creates json files needed by the code that gets the class and gender info """
+  # In the current Wikipedia page generator, only one subject is possible
+  list_subj = []
+  list_subj.append(entity_name)
+  list_subj_str = '"'+str(list_subj)+'"'
+  list_obj_str = '"'+str(list_obj)+'"'
+  json_subj = json.dumps(list_subj)
+  json_obj = json.dumps(list_obj)
+  filepath_subj = os.path.join(path_triple2predArg, 'classMembership', 'new_subj_values.json')
+  filepath_obj = os.path.join(path_triple2predArg, 'classMembership', 'new_obj_values.json')
+  with codecs.open(filepath_subj, 'w', 'utf-8') as fo1:
+    fo1.write(json_subj)
+  with codecs.open(filepath_obj, 'w', 'utf-8') as fo2:
+    fo2.write(json_obj)
+  return filepath_subj, filepath_obj
+
+def prepare_variables_xml2CoNLL_conversion(str_PredArg_folder, language, entity_name, path_triple2predArg):
+  # empty FORGe input folder
+  clear_files(str_PredArg_folder)
+  language_t2p = language.lower()
+  path_t2p_out = os.path.join(path_triple2predArg, 'out/')
+  clear_files(path_t2p_out)
+  name_conll_templates = ''
+  if language == 'GA':
+    name_conll_templates = '221130_WebNLG23_GA.conll'
+  else:
+    name_conll_templates = '230528-WebNLG23_EN.conll'
+  new_triple2predArg = path_triple2predArg+'/'
+  newEntityName = removeReservedCharsFileName(entity_name)
+  return new_triple2predArg, name_conll_templates, path_t2p_out, language_t2p, newEntityName
