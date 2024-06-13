@@ -81,7 +81,7 @@ def get_properties_of_entity(uri):
   #   ignore_properties_str = sys.argv[4]
   #   out_folder = sys.argv[5]
 
-def get_dbpedia_properties(props_list_path, entity_name, triple_source, ignore_properties_str, out_folder):
+def get_dbpedia_properties(props_list_path, entity_name, triple_source, ignore_properties_str):
   ignore_properties_input = ignore_properties_str.split(',')
   ignore_properties_list = []
   for ignored_property in ignore_properties_input:
