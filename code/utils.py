@@ -215,3 +215,5 @@ def concatenate_files(root_folder, morph_output_folder, temp_input_folder_morph,
       fo.write(('ERROR! Mismatch with FORGe outputs!\n'))
     print('\nThere are '+str(count_texts_all)+' texts.')
     fo.write('There are '+str(count_texts_all)+' texts.\n')
+
+  return filename
