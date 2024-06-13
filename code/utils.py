@@ -51,7 +51,7 @@ def removeReservedCharsFileName(entityName):
     newEntityName = re.sub(r'[#%&\{\}\\<>\*\?/ \$!\'":@\+`\|=]', "", newEntityName)
   return newEntityName
 
-def create_xml(triple_objects, properties_selected_by_user, triple2predArgPath):
+def create_xml(triple_objects, properties_selected_by_user, input_category, triple2predArgPath):
   """ Create the XML file with the triples to be converted to PredArg"""
   n = len(properties_selected_by_user)
   list_triples_text = []
