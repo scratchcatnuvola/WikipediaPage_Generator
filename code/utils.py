@@ -152,7 +152,7 @@ def prepare_variables_xml2CoNLL_conversion(str_PredArg_folder, language, entity_
   # empty FORGe input folder
   clear_files(str_PredArg_folder)
   language_t2p = language.lower()
-  path_t2p_out = os.path.join(path_triple2predArg, 'out/')
+  path_t2p_out = os.path.join(path_triple2predArg, 'out')
   clear_files(path_t2p_out)
   name_conll_templates = ''
   if language == 'GA':
