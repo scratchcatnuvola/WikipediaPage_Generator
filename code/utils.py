@@ -112,7 +112,7 @@ def create_GPT_Prompt(entity_name, language, list_triples_text, dest_folder):
   language_map = {'EN': 'English', 'GA': 'Irish', 'ES': 'Spanish'}
   if not os.path.exists(dest_folder):
     os.makedirs(dest_folder)
-  with codecs.open(os.path.join(dest_folder, f'GPT_prompt_{entity_name}.txt', 'w', 'utf-8') as fo_gpt:
+  with codecs.open(os.path.join(dest_folder, f'GPT_prompt_{entity_name}.txt'), 'w', 'utf-8') as fo_gpt:
     lg_text = language_map[language]
     line = f'Write the following triples as fluent {lg_text} text.\nTriples:"""\n'
     # line = 'Please verbalise the following list of DBpedia triples in English in a Wikipedia style; do not add any content, do not remove any content.\nTriples:\n'
