@@ -108,9 +108,11 @@ def create_xml(triple_objects, properties_selected_by_user, input_category, trip
       f.write(xml_str)
   return list_triples_text 
 
-def create_GPT_Prompt(entity_name, language, list_triples_text):
+def create_GPT_Prompt(entity_name, language, list_triples_text, dest_folder):
   language_map = {'EN': 'English', 'GA': 'Irish', 'ES': 'Spanish'}
-  with codecs.open(f'GPT_prompt_{entity_name}.txt', 'w', 'utf-8') as fo_gpt:
+  if not os.path.exists(dest_folder):
+    os.makedirs(dest_folder)
+  with codecs.open(os.path.join(dest_folder, f'GPT_prompt_{entity_name}.txt', 'w', 'utf-8') as fo_gpt:
     lg_text = language_map[language]
     line = f'Write the following triples as fluent {lg_text} text.\nTriples:"""\n'
     # line = 'Please verbalise the following list of DBpedia triples in English in a Wikipedia style; do not add any content, do not remove any content.\nTriples:\n'
@@ -201,6 +203,26 @@ def concatenate_files(root_folder, morph_output_folder, temp_input_folder_morph,
   filename = 'all_'+language+'_'+split+'_out.txt'
   
   with codecs.open(filename, 'w', 'utf-8') as outfile:
+    # Files need to be sorted to be concatenated in the right order
+    for fname in sorted(list_clean_outputs):
+      print('Processing '+fname)
+      with open(fname) as infile:
+        outfile.write(infile.read())
+
+def concatenate_files_UI(root_folder, morph_output_folder, temp_input_folder_morph, split, language, count_strs_all_FORGe, entity_name, dest_folder):
+  if not os.path.exists(dest_folder):
+    os.makedirs(dest_folder)
+    
+  list_clean_outputs = ''
+  if language == 'GA':
+    list_clean_outputs = glob.glob(os.path.join(morph_output_folder, '*_out_postproc.txt'))
+  else:
+    list_clean_outputs = glob.glob(os.path.join(temp_input_folder_morph, split, '*_postproc.txt'))
+  print(list_clean_outputs)
+  
+  filename = entity_name+'_'+language.txt'
+  
+  with codecs.open(os.path.join(dest_folder, filename), 'w', 'utf-8') as outfile:
     # Files need to be sorted to be concatenated in the right order
     for fname in sorted(list_clean_outputs):
       print('Processing '+fname)
