@@ -208,6 +208,18 @@ def concatenate_files(root_folder, morph_output_folder, temp_input_folder_morph,
       print('Processing '+fname)
       with open(fname) as infile:
         outfile.write(infile.read())
+  
+  # Check
+  with codecs.open(os.path.join(root_folder, 'FORGe', 'log', 'summary.txt'), 'a', 'utf-8') as fo:
+    fo.write('\nConcatenate debug\n==================\n\n')
+    count_texts_all = len(codecs.open(filename).readlines())
+    if not count_texts_all == count_strs_all_FORGe:
+      print('\nERROR! Mismatch with FORGe outputs!')
+      fo.write(('ERROR! Mismatch with FORGe outputs!\n'))
+    print('\nThere are '+str(count_texts_all)+' texts.')
+    fo.write('There are '+str(count_texts_all)+' texts.\n')
+
+  return filename
 
 def concatenate_files_UI(root_folder, morph_output_folder, temp_input_folder_morph, split, language, count_strs_all_FORGe, entity_name, dest_folder):
   if not os.path.exists(dest_folder):
