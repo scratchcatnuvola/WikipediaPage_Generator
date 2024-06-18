@@ -220,7 +220,7 @@ def concatenate_files_UI(root_folder, morph_output_folder, temp_input_folder_mor
     list_clean_outputs = glob.glob(os.path.join(temp_input_folder_morph, split, '*_postproc.txt'))
   print(list_clean_outputs)
   
-  filename = entity_name+'_'+language.txt'
+  filename = entity_name+'_'+language+'.txt'
   
   with codecs.open(os.path.join(dest_folder, filename), 'w', 'utf-8') as outfile:
     # Files need to be sorted to be concatenated in the right order
