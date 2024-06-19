@@ -37,14 +37,19 @@ def get_prop_index_from_table(selected_properties, list_triple_objects):
   list_triple_objects is a list of object of class Triple, as defined in the queryDBpediaProps module
   """
   properties_selected_by_user = []
-  if len(selected_properties.value) == 0:
-    x = 0
-    while x < len(list_triple_objects):
-      properties_selected_by_user.append(x)
-      x += 1
+  # In case we already receive the IDs, just copy the list
+  if isinstance(selected_properties, list):
+    properties_selected_by_user = selected_properties
+  # Otherwise, extract the list from the data structure
   else:
-    for selected_property in selected_properties.value:
-      properties_selected_by_user.append(int(selected_property.split(' - ')[0]))
+    if len(selected_properties.value) == 0:
+      x = 0
+      while x < len(list_triple_objects):
+        properties_selected_by_user.append(x)
+        x += 1
+    else:
+      for selected_property in selected_properties.value:
+        properties_selected_by_user.append(int(selected_property.split(' - ')[0]))
   return properties_selected_by_user
 
 def removeReservedCharsFileName(entityName):
