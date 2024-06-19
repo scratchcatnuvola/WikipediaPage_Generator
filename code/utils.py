@@ -7,7 +7,7 @@ import json
 from xml.dom import minidom
 import re
 import glob
-from google.colab import files
+# from google.colab import files
 
 def clear_files(folder):
   """Function to clear files from a folder."""
