@@ -93,9 +93,11 @@ def create_xml(triple_objects, properties_selected_by_user, input_category, trip
   lex.appendChild(fake_text)
   # Fill in otriple and mtriple fields with the same info
   x = 0
+  dbsubj = 'Ukn'
   while x < len(triple_objects):
   # for triple_object in triple_objects:
     triple_object = triple_objects[x]
+    dbsubj = str(triple_object.DBsubj)
     if x in properties_selected_by_user:
       text1 = root.createTextNode(triple_object.DBsubj+' | '+triple_object.DBprop+' | '+triple_object.DBobj)
       list_triples_text.append(f'{triple_object.DBsubj} | {triple_object.DBprop} | {triple_object.DBobj}')
@@ -108,7 +110,7 @@ def create_xml(triple_objects, properties_selected_by_user, input_category, trip
       mtriple.appendChild(text2)
     x += 1
   xml_str = root.toprettyxml(indent ="  ")
-  save_path_file = os.path.join(triple2predArgPath, str(removeReservedCharsFileName(triple_object.DBsubj))+".xml")
+  save_path_file = os.path.join(triple2predArgPath, str(removeReservedCharsFileName(dbsubj))+".xml")
   with open(save_path_file, "w") as f:
       f.write(xml_str)
   return list_triples_text 
