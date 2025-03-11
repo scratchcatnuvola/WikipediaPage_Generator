@@ -76,7 +76,7 @@ def get_properties_of_entity(uri, look_for_entity_as = 'Subj'):
       <{uri}> ?property ?value.
     }}
     """
-  if look_for_entity_as == 'Obj':
+  elif look_for_entity_as == 'Obj':
     sparql_query = f"""
     SELECT ?value ?property
     WHERE {{
