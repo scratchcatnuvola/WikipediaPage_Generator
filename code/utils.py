@@ -120,11 +120,12 @@ def create_xml(triple_objects, properties_selected_by_user, input_category, trip
   while x < len(triple_objects):
   # for triple_object in triple_objects:
     triple_object = triple_objects[x]
-    # If the entity was queried as a Subject or as Subject and Object, use the first triple's subject as filename. If it was only queried as an object, then take the first triple's object as filename.
-    if entity_name == None:
-      dbsubj = str(triple_object.DBsubj)
-    else:
-      dbsubj = entity_name
+    # If there is no info about the entity, use the first triple's subject as filename
+    if x == 0:
+      if entity_name == None:
+        dbsubj = str(triple_object.DBsubj)
+      else:
+        dbsubj = entity_name
     if x in properties_selected_by_user:
       text1 = root.createTextNode(triple_object.DBsubj+' | '+triple_object.DBprop+' | '+triple_object.DBobj)
       list_triples_text.append(f'{triple_object.DBsubj} | {triple_object.DBprop} | {triple_object.DBobj}')
