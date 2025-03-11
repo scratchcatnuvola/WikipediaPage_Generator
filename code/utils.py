@@ -124,7 +124,7 @@ def create_xml(triple_objects, properties_selected_by_user, input_category, trip
     if entity_name == None:
       dbsubj = str(triple_object.DBsubj)
     else:
-      dsubj = entity_name
+      dbsubj = entity_name
     if x in properties_selected_by_user:
       text1 = root.createTextNode(triple_object.DBsubj+' | '+triple_object.DBprop+' | '+triple_object.DBobj)
       list_triples_text.append(f'{triple_object.DBsubj} | {triple_object.DBprop} | {triple_object.DBobj}')
