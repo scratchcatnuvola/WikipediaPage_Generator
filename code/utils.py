@@ -30,11 +30,12 @@ def clear_folder(folder):
     except Exception as e:
       print('Failed to delete %s. Reason: %s' % (folder, e))
 
-def get_first_n_instances_of_props(list_triple_objects, max_num_of_instances_of_prop_desired):
+def get_first_n_instances_of_props(list_triple_objects, max_num_of_instances_of_prop_desired, properties_that_can_happen_once_only):
   """
   Function that selects the first n occurrences of a triple that contains the same property.
-  Input list_triple_objects: a list of triple objects, each triple should have 3 attributes: DBsubj, DBprop, DBobj
-  Input max_num_of_instances_of_prop_desired: an integer that specifies the maximum number of occurrences of each property in the triple set
+  Input list_triple_objects: a list of triple objects, each triple should have 3 attributes: DBsubj, DBprop, DBobj.
+  Input max_num_of_instances_of_prop_desired: an integer that specifies the maximum number of occurrences of each property in the triple set.
+  Input properties_that_can_happen_once_only; a list of property labels that cannot have 2 or more values, even though they do have more than one on the queried resource.
   Output: a list of ist indices, e.g [0, 1, 2, 3, 4, 5, 6, 8, 9].
   """
   dico_num_instances_of_prop_found = {}
@@ -48,7 +49,8 @@ def get_first_n_instances_of_props(list_triple_objects, max_num_of_instances_of_
     else:
       dico_num_instances_of_prop_found[triple_object.DBprop] += 1
       if dico_num_instances_of_prop_found[triple_object.DBprop] <= max_num_of_instances_of_prop_desired:
-        selected_properties.append(i)
+        if triple_object.DBprop not in properties_that_can_happen_once_only:
+          selected_properties.append(i)
   return selected_properties
 
 def get_prop_index_from_table(selected_properties, list_triple_objects):
