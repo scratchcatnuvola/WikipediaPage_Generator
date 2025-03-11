@@ -24,7 +24,7 @@ class Triple:
     self.DBsubj = subj_value
     self.DBobj = obj_value
 
-def get_triples_seen(results, subj_name, triple_source, list_properties, ignore_properties_list, dico_map_dbp_wkd = dico_map_dbp_wkd):
+def get_triples_seen(results, subj_name, triple_source, list_properties, ignore_properties_list, dico_map_dbp_wkd = dico_map_dbp_wkd, entity_is_sbjORobj = 'Subj'):
   # Process and print the results
   list_triple_objects = []
   for result in results:
@@ -53,6 +53,14 @@ def get_triples_seen(results, subj_name, triple_source, list_properties, ignore_
         obj_name = value
         if re.search('http://', value):
           obj_name = value.rsplit('/', 1)[1]
+        obj_name_final = ''
+        subj_name_final = ''
+        if entity_is_sbjORobj == 'Subj':
+          subj_name_final = subj_name
+          obj_name_final = obj_name
+        elif entity_is_sbjORobj == 'Obj':
+          subj_name_final = obj_name
+          obj_name_final = subj_name
         # If we use Wikidata as source, we need to map the Wikidata property label to the DBpedia one
         if triple_source == 'Wikidata':
           if prop_name in dico_map_dbp_wkd:
@@ -60,7 +68,7 @@ def get_triples_seen(results, subj_name, triple_source, list_properties, ignore_
         # print(f'TEST prop_name: {prop_name}')
         if prop_name in list_properties and not prop_name in ignore_properties_list:
           # print(f"{prop_name}: {obj_name}")
-          triple_object = Triple(prop_name, subj_name, obj_name)
+          triple_object = Triple(prop_name, subj_name_final, obj_name_final)
           list_triple_objects.append(triple_object)
   return list_triple_objects
 
@@ -205,9 +213,9 @@ def get_dbpedia_properties(props_list_path, entity_name, triple_source, ignore_p
   # Get properties covered by the generator and their respective objets
   list_triple_objects = []
   if get_triples_where_entity_is_subj == True:
-    list_triple_objects.extend(get_triples_seen(results_subj, subj_name, triple_source, list_properties, ignore_properties_list))
+    list_triple_objects.extend(get_triples_seen(results_subj, subj_name, triple_source, list_properties, ignore_properties_list, entity_is_sbjORobj = 'Subj'))
   if get_triples_where_entity_is_obj == True:
-    list_triple_objects.extend(get_triples_seen(results_obj, subj_name, triple_source, list_properties, ignore_properties_list))
+    list_triple_objects.extend(get_triples_seen(results_obj, subj_name, triple_source, list_properties, ignore_properties_list, entity_is_sbjORobj = 'Obj'))
 
   # Check
   # print('Subject: '+subj_name)
