@@ -64,16 +64,25 @@ def get_triples_seen(results, subj_name, triple_source, list_properties, ignore_
           list_triple_objects.append(triple_object)
   return list_triple_objects
 
-def get_properties_of_entity(uri):
+def get_properties_of_entity(uri, look_for_entity_as = 'Subj'):
   # Define the DBpedia SPARQL endpoint URL
   sparql_endpoint = "https://dbpedia.org/sparql"
+  sparql_query = None
   # Compose the SPARQL query
-  sparql_query = f"""
-  SELECT ?property ?value
-  WHERE {{
-    <{uri}> ?property ?value.
-  }}
-  """
+  if look_for_entity_as == 'Subj':
+    sparql_query = f"""
+    SELECT ?property ?value
+    WHERE {{
+      <{uri}> ?property ?value.
+    }}
+    """
+  if look_for_entity_as == 'Obj':
+    sparql_query = f"""
+    SELECT ?value ?property
+    WHERE {{
+      ?value ?property <{uri}>.
+    }}
+    """
   # Create a SPARQLWrapper object and set the query
   sparql = SPARQLWrapper(sparql_endpoint)
   sparql.setQuery(sparql_query)
