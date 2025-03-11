@@ -83,7 +83,7 @@ def removeReservedCharsFileName(entityName):
     newEntityName = re.sub(r'[#%&\{\}\\<>\*\?/ \$!\'":@\+`\|=]', "", newEntityName)
   return newEntityName
 
-def create_xml(triple_objects, properties_selected_by_user, input_category, triple2predArgPath, entity_is_sbjORobj = 'Subj'):
+def create_xml(triple_objects, properties_selected_by_user, input_category, triple2predArgPath, entity_name = None):
   """ Create the XML file with the triples to be converted to PredArg. """
   n = len(properties_selected_by_user)
   list_triples_text = []
@@ -121,11 +121,10 @@ def create_xml(triple_objects, properties_selected_by_user, input_category, trip
   # for triple_object in triple_objects:
     triple_object = triple_objects[x]
     # If the entity was queried as a Subject or as Subject and Object, use the first triple's subject as filename. If it was only queried as an object, then take the first triple's object as filename.
-    if x == 0:
-      if entity_is_sbjORobj == 'Subj':
-        dbsubj = str(triple_object.DBsubj)
-      elif entity_is_sbjORobj == 'Obj':
-        dbsubj = str(triple_object.DBobj)
+    if entity_name == None:
+      dbsubj = str(triple_object.DBsubj)
+    else:
+      dsubj = entity_name
     if x in properties_selected_by_user:
       text1 = root.createTextNode(triple_object.DBsubj+' | '+triple_object.DBprop+' | '+triple_object.DBobj)
       list_triples_text.append(f'{triple_object.DBsubj} | {triple_object.DBprop} | {triple_object.DBobj}')
