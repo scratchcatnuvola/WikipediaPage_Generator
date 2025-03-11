@@ -64,19 +64,19 @@ def get_triples_seen(results, subj_name, triple_source, list_properties, ignore_
           list_triple_objects.append(triple_object)
   return list_triple_objects
 
-def get_properties_of_entity(uri, look_for_entity_as = 'Subj'):
+def get_properties_of_entity(uri, look_for_entity_as_sbjORobj):
   # Define the DBpedia SPARQL endpoint URL
   sparql_endpoint = "https://dbpedia.org/sparql"
   sparql_query = None
   # Compose the SPARQL query
-  if look_for_entity_as == 'Subj':
+  if look_for_entity_as_sbjORobj == 'Subj':
     sparql_query = f"""
     SELECT ?property ?value
     WHERE {{
       <{uri}> ?property ?value.
     }}
     """
-  elif look_for_entity_as == 'Obj':
+  elif look_for_entity_as_sbjORobj == 'Obj':
     sparql_query = f"""
     SELECT ?value ?property
     WHERE {{
@@ -122,7 +122,7 @@ def get_wikidata_id(entity_label):
     print("Error connecting to the Wikidata API:", e)
     return None
 
-def get_wikidata_properties_of_entity(wikidata_id):
+def get_wikidata_properties_of_entity(wikidata_id, look_for_entity_as_sbjORobj):
   """
   Retrieves properties and their values for a given Wikidata entity.
   Args:
@@ -131,13 +131,23 @@ def get_wikidata_properties_of_entity(wikidata_id):
     A list of dictionaries, where each dictionary represents a property and its value.
   """
   sparql_endpoint = "https://query.wikidata.org/sparql"
-  sparql_query = f"""
-    SELECT ?property ?valueLabel
-    WHERE {{
-      wd:{wikidata_id} ?property ?value .
-      SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
-    }}
-  """
+  sparql_query = None
+  if look_for_entity_as_sbjORobj == 'Subj':
+    sparql_query = f"""
+      SELECT ?property ?valueLabel
+      WHERE {{
+        wd:{wikidata_id} ?property ?value .
+        SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+      }}
+    """
+  elif look_for_entity_as_sbjORobj == 'Obj':
+    sparql_query = f"""
+      SELECT ?valueLabel ?property
+      WHERE {{
+        ?value ?property wd:{wikidata_id}.
+        SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+      }}
+    """
   sparql = SPARQLWrapper(sparql_endpoint)
   sparql.setQuery(sparql_query)
   sparql.setReturnFormat(JSON)
@@ -158,7 +168,7 @@ def get_wikidata_properties_of_entity(wikidata_id):
   #   ignore_properties_str = sys.argv[4]
   #   out_folder = sys.argv[5]
 
-def get_dbpedia_properties(props_list_path, entity_name, triple_source, ignore_properties_str):
+def get_dbpedia_properties(props_list_path, entity_name, triple_source, ignore_properties_str, get_triples_where_entity_is_subj = True, get_triples_where_entity_is_obj = False):
   ignore_properties_input = ignore_properties_str.split(',')
   ignore_properties_list = []
   for ignored_property in ignore_properties_input:
@@ -177,15 +187,27 @@ def get_dbpedia_properties(props_list_path, entity_name, triple_source, ignore_p
   # selected_uri = "http://dbpedia.org/resource/Olga_Bondareva"
   subj_name = selected_uri.rsplit('/', 1)[1]
   # Get all properties for entity
-  results = ''
+  results_subj = ''
+  results_obj = ''
   if triple_source == 'Ontology' or triple_source == 'Infobox':
-    results = get_properties_of_entity(selected_uri)
+    if get_triples_where_entity_is_subj == True:
+      results_subj = get_properties_of_entity(selected_uri, 'Subj')
+    if get_triples_where_entity_is_obj == True:
+      results_obj = get_properties_of_entity(selected_uri, 'Obj')
   elif triple_source == 'Wikidata':
     wikidata_id = get_wikidata_id(entity_name)
     # print(wikidata_id)
-    results = get_wikidata_properties_of_entity(wikidata_id)
+    if get_triples_where_entity_is_subj == True:
+      results_subj = get_wikidata_properties_of_entity(wikidata_id, 'Subj')
+    if get_triples_where_entity_is_obj == True:
+      results_obj = get_wikidata_properties_of_entity(wikidata_id, 'Obj')
+      
   # Get properties covered by the generator and their respective objets
-  list_triple_objects = get_triples_seen(results, subj_name, triple_source, list_properties, ignore_properties_list)
+  list_triple_objects = []
+  if get_triples_where_entity_is_subj == True:
+    list_triple_objects.extend(get_triples_seen(results_subj, subj_name, triple_source, list_properties, ignore_properties_list))
+  if get_triples_where_entity_is_obj == True:
+    list_triple_objects.extend(get_triples_seen(results_obj, subj_name, triple_source, list_properties, ignore_properties_list))
 
   # Check
   # print('Subject: '+subj_name)
